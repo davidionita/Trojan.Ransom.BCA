@@ -1,0 +1,23 @@
+{
+  "name": "trojan.ransom.bca",
+  "version": "1.0.0",
+  "description": "An Electron.JS and Node.JS application designed to work similar to the popular WannaCry ransomware.",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidionita/Trojan.Ransom.BCA.git"
+  },
+  "author": "David Ionita, Elias Cho, Alexander Vigorito",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidionita/Trojan.Ransom.BCA/issues"
+  },
+  "homepage": "https://github.com/davidionita/Trojan.Ransom.BCA#readme",
+  "devDependencies": {
+    "electron": "^2.0.2"
+  }
+}
