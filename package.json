@@ -2,7 +2,7 @@
   "name": "trojan.ransom.bca",
   "version": "1.0.0",
   "description": "An Electron.JS and Node.JS application designed to work similar to the popular WannaCry ransomware.",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
