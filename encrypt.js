@@ -4,7 +4,6 @@ var key = crypto.randomBytes(6).toString('base64');
 var fileName = crypto.randomBytes(9).toString('base64');
 console.log(fileName);
 
-
 console.log(key);
 
 function encrypt () {
@@ -20,8 +19,6 @@ function encrypt () {
 
 }
 
-encrypt();
-
 function decrypt () {
     var decipher = crypto.createDecipher('aes-256-cbc', key);
     var input = fs.createReadStream(fileName);
@@ -35,4 +32,13 @@ function decrypt () {
 
 }
 
-setTimeout(decrypt, 1000);
+function process () {
+    encrypt();
+    setTimeout(decrypt, 1000);
+}
+
+module.exports = {
+    process: function () {
+        process();
+    }
+};
