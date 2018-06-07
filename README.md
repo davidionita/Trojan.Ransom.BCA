@@ -1,6 +1,3 @@
----
-layout: default
----
 # Trojan.Ransom.BCA
 
 **This is created for educational purposes only and is NOT intended for malicious use.**
