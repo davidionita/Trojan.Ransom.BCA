@@ -35,4 +35,4 @@ function decrypt () {
 
 }
 
-setTimeout(decrypt, 2500);
+setTimeout(decrypt, 1000);
