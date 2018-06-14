@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Hello World!</title>
     <link rel="stylesheet" href="style.css">
+    <script src="encrypt.js"></script>
 </head>
 <body>
 <h1>Hello World!</h1>
@@ -45,5 +46,22 @@ You have until June 11th, 2018 15:22 to pay or your files will be lost
         }
     }, 1000);
 </script>
+
+Enter key here: <input type="text" id="inputKey">
+<button onclick="checkKey()">Submit</button>
+<button onclick="search(0)">Encrypt</button>
+<button onclick="search(1)">Decrypt</button>
+<p id="key"></p>
+
+<script>
+    function checkKey() {
+        let inputKey = document.getElementById("inputKey").value;
+        console.log(key);
+        if (inputKey === key) {
+            document.getElementById("key").innerHTML = "Correct";
+        }
+    }
+</script>
+
 </body>
 </html>
