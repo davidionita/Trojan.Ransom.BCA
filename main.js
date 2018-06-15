@@ -1,5 +1,5 @@
 const {app, BrowserWindow} = require('electron');
-const encrypt = require('./encrypt');
+// const encrypt = require('./encrypt');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -30,7 +30,7 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.on('ready', function () {
     createWindow();
-    encrypt.process();
+/*    encrypt.process(key);*/
 });
 
 // Quit when all windows are closed.
