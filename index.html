@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Trojan.Ransom.BCA</title>
     <link rel="stylesheet" href="style.css">
+    <script src="encrypt.js"></script>
 </head>
 <body>
 <div class="header">
@@ -12,20 +13,20 @@
 
 <!-- Display the countdown timer in an element -->
 <script type="text/javascript">
-    var count = 86400;
-    var counter = setInterval(timer, 1000);
+    let count = 86400;
+    const counter = setInterval(timer, 1000);
 
     function timer() {
         count = count - 1;
-        if (count == -1) {
+        if (count === -1) {
             clearInterval(counter);
-            document.getElementById("demo").innerHTML = "EXPIRED";
+            document.getElementById("timer").innerHTML = "EXPIRED";
             return;
         }
 
-        var seconds = count % 60;
-        var minutes = Math.floor(count / 60);
-        var hours = Math.floor(minutes / 60);
+        let seconds = count % 60;
+        let minutes = Math.floor(count / 60);
+        let hours = Math.floor(minutes / 60);
         minutes %= 60;
         hours %= 60;
 

