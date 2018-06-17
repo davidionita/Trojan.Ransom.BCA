@@ -1,39 +1,57 @@
-
-html, body{
-    height: 95%;
-    font-family: "Comic Sans MS";
-    background-color: red;
+html, body {
+    height: 98%;
+    width: 98%;
+    font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+    background-color: black;
+    color: lime;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
-.left-div #timer {
-
-    font-size: 2em;
-    display:block;
-    border: none;
-    margin-top: 175%;
+#center {
+    display: flex;
+    align-items: stretch;
+    height: 70%
 }
 
-.left-div {
-    padding: 1em;
-    margin: 5% 5% 5%;
-    height: 70%;
+#left-bar > #timer {
+    font-size: 3vw;
+}
+
+#left-bar {
+    padding: 2%;
+    margin: 5% 5% 5% 5%;
+    border: 2px solid lime;
+    flex-grow: 1;
+    text-align: center;
+    width: 100%
+}
+
+#info {
+    flex-grow: 9;
+    overflow-y: scroll;
+    text-align: justify;
+}
+
+header {
+    margin: 0;
+    text-align: center;
+    font-size: 2vw;
+}
+
+#center > img {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer {
+    bottom: 1vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+footer > img {
     width: 20%;
-    float: left;
-    border:5px solid black;
-    text-align: center;
-}
-
-.center-div {
-    margin: 0 auto;
-    width: 100%;
-}
-
-.down-div {
-    margin-top: 27em;
-}
-
-.header {
-    margin: 0 auto;
-    width: 100%;
-    text-align: center;
 }
