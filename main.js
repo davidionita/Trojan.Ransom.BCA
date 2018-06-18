@@ -1,8 +1,10 @@
 const {app, BrowserWindow} = require('electron');
+
 // const encrypt = require('./encrypt');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
+
 let win;
 
 function createWindow () {
@@ -14,7 +16,7 @@ function createWindow () {
     win.loadFile('index.html');
 
     // Open the DevTools.
-    // win.webContents.openDevTools();
+    win.webContents.openDevTools();
 
     win.setFullScreen(true);
 
@@ -54,14 +56,3 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-
-const wallpaper = require('wallpaper');
-
-wallpaper.set('unicorn.jpg').then(() => {
-    console.log('done');
-});
-
-wallpaper.get().then(imagePath => {
-    console.log(imagePath);
-    //=> '/Users/sindresorhus/unicorn.jpg'
-});
