@@ -32,10 +32,14 @@
                 let finalCount = Math.ceil((timerData.finalTime - (new Date).getTime()) / 1000);
 
                 let seconds = [doubleCount % 60, finalCount % 60];
-                let minutes = [Math.floor((doubleCount / 60) % 60), Math.floor((finalCount / 60 % 60))];
-                let hours = [Math.floor((doubleCount / 60) / 60), Math.floor((finalCount / 60) / 60)];
+                let minutes = [Math.floor(doubleCount / 60), Math.floor(finalCount / 60)];
+                let displayMinutes = [minutes[0] % 60, minutes[1] % 60];
+                let hours = [Math.floor(minutes[0] / 60), Math.floor(minutes[1] / 60)];
+                let displayHours = [hours[0] % 24, hours[1] % 24];
+                let days = [Math.floor(hours[0] / 24), Math.floor(hours[1] / 24)];
                 minutes.forEach((i) => {i %= 60});
                 hours.forEach((i) => {i %= 60});
+                days.forEach((i) => {i %= 24});
 
                 if (finalCount < 0) {
                     document.getElementById("finalTimer").innerHTML = "FILES LOST";
@@ -46,16 +50,18 @@
                     document.getElementById("doublingTimer").innerHTML = "DOUBLED PRICE";
                     count = timerData.finalTime - (new Date).getTime();
 
-                    document.getElementById("finalTimer").innerHTML = ("00" + hours[1]).slice(-2) + ":" +
-                        ("00" + minutes[1]).slice(-2) + ":" +
+                    document.getElementById("finalTimer").innerHTML = ("00" + days[1]).slice(-2) + ":" +
+                        ("00" + displayHours[1]).slice(-2) + ":" +
+                        ("00" + displayMinutes[1]).slice(-2) + ":" +
                         ("00" + seconds[1]).slice(-2);
                 } else {
                     document.getElementById("doublingTimer").innerHTML = ("00" + hours[0]).slice(-2) + ":" +
                         ("00" + minutes[0]).slice(-2) + ":" +
                         ("00" + seconds[0]).slice(-2);
 
-                    document.getElementById("finalTimer").innerHTML = ("00" + hours[1]).slice(-2) + ":" +
-                        ("00" + minutes[1]).slice(-2) + ":" +
+                    document.getElementById("finalTimer").innerHTML = ("00" + days[1]).slice(-2) + ":" +
+                        ("00" + displayHours[1]).slice(-2) + ":" +
+                        ("00" + displayMinutes[1]).slice(-2) + ":" +
                         ("00" + seconds[1]).slice(-2);
                 }
 
@@ -108,7 +114,7 @@
     <img src="BitcoinAcceptedHere.png">
     <div id="payInput">
         <div id="sendBitcoin"></div>
-        <div style="border: 2px solid lime;">1LZwY34Qdbja6BiqK6PS5SmpMXiPhDTMcY</div>
+        <div style="border: 2px solid lime;">abcdefghijklmnopqrstuvwxyz</div>
     </div>
     <div id="keyInput">
         Enter key here:<br>
