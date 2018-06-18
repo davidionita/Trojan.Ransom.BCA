@@ -24,6 +24,11 @@ function encrypt (pathIn, key, isDir) {
 
             output.on('finish', function () {
                 console.log('Encrypted file written to disk!');
+
+                fs.unlink(pathIn, function (err) {
+                    if (err) throw err;
+                    console.log('Deleted');
+                });
             });
         }
     }
