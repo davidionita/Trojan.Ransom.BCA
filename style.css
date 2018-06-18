@@ -50,8 +50,16 @@ footer {
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-around;
 }
 
 footer > img {
     width: 20%;
 }
+
+/*
+#buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}*/

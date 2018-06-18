@@ -14,7 +14,7 @@ function createWindow () {
     win.loadFile('index.html');
 
     // Open the DevTools.
-    // win.webContents.openDevTools();
+    win.webContents.openDevTools();
 
     // Emitted when the window is closed.
     win.on('closed', () => {
@@ -30,7 +30,7 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.on('ready', function () {
     createWindow();
-/*    encrypt.process(key);*/
+    // encrypt.process(key);
 });
 
 // Quit when all windows are closed.

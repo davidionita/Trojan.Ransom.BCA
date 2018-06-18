@@ -30,7 +30,6 @@ function decrypt (pathIn, key) {
         if (err) throw err;
 
         if (oldName.slice(-1) === "*") {
-            console.log("Decrypt: " + key);
             let tmp = crypto.createDecipher('aes-256-cbc', key);
             const newName = tmp.update(oldName.slice(0, -1), 'hex','utf8') + tmp.final('utf8');
 
@@ -66,7 +65,6 @@ function search (mode) {
                 key = newKey;
             } else {
                 key = data;
-                console.log(key);
             }
 
             files.forEach(function(file, index) {
