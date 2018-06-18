@@ -33,7 +33,9 @@
 
                 let seconds = [doubleCount % 60, finalCount % 60];
                 let minutes = [Math.floor((doubleCount / 60) % 60), Math.floor((finalCount / 60 % 60))];
-                let hours = [Math.floor((doubleCount / 60) / 60), Math.floor((finalCount / 60) / 60)];
+                let hours = [Math.floor((doubleCount / 60 / 60) % 24), Math.floor((finalCount / 60 / 60) % 24)];
+                let days = [Math.floor(doubleCount / 60 / 60 / 24), Math.floor(finalCount / 60 / 60 / 24)];
+
                 minutes.forEach((i) => {i %= 60});
                 hours.forEach((i) => {i %= 60});
 
@@ -46,15 +48,18 @@
                     document.getElementById("doublingTimer").innerHTML = "DOUBLED PRICE";
                     count = timerData.finalTime - (new Date).getTime();
 
-                    document.getElementById("finalTimer").innerHTML = ("00" + hours[1]).slice(-2) + ":" +
+                    document.getElementById("finalTimer").innerHTML = ("00" + days[1]).slice(-2) + ":" +
+                        ("00" + hours[1]).slice(-2) + ":" +
                         ("00" + minutes[1]).slice(-2) + ":" +
                         ("00" + seconds[1]).slice(-2);
                 } else {
-                    document.getElementById("doublingTimer").innerHTML = ("00" + hours[0]).slice(-2) + ":" +
+                    document.getElementById("doublingTimer").innerHTML = ("00" + days[0]).slice(-2) + ":" +
+                        ("00" + hours[0]).slice(-2) + ":" +
                         ("00" + minutes[0]).slice(-2) + ":" +
                         ("00" + seconds[0]).slice(-2);
 
-                    document.getElementById("finalTimer").innerHTML = ("00" + hours[1]).slice(-2) + ":" +
+                    document.getElementById("finalTimer").innerHTML = ("00" + days[1]).slice(-2) + ":" +
+                        ("00" + hours[1]).slice(-2) + ":" +
                         ("00" + minutes[1]).slice(-2) + ":" +
                         ("00" + seconds[1]).slice(-2);
                 }
