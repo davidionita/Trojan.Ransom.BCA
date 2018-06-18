@@ -5,7 +5,6 @@ const parentDir = __dirname + "/../";
 const newKey = crypto.randomBytes(6).toString('base64');
 
 function encrypt (pathIn, key) {
-
     const oldName = pathIn.split('/').pop();
     if (oldName.slice(-1) !== "*") {
         console.log("Encrypt: " + key);
