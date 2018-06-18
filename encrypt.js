@@ -62,7 +62,7 @@ function decrypt (pathIn, key, isDir) {
 }
 
 function search (pathIn, mode) {
-    fs.readdir( pathIn, function(err, files) {
+    fs.readdir(pathIn, function(err, files) {
         if(err) {
             console.error("Could not list the directory.", err );
             process.exit(1);
@@ -90,7 +90,7 @@ function search (pathIn, mode) {
                         console.log("'%s' is a file.", filePath);
 
                         let extension = file.split('.').pop();
-                        if (file !== ".DS_Store" && extension !== "app" && extension !== "localized" && extension !== "ini") {
+                        if (file !== ".DS_Store" && !["app", "exe", "localized", "ini"].includes(extension)) {
                             if (mode === 0) encrypt(filePath, key, false);
                             else if (mode === 1) decrypt(filePath, key, false);
                         }
