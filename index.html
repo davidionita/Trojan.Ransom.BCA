@@ -16,8 +16,8 @@
         fs.readFile("timer.json", "utf8", function (err, data) {
             let timerData = {doublingTime: 0, finalTime: 0, price: 0};
             if (err) {
-                timerData.doublingTime = (new Date).getTime() + 1000 * 5;
-                timerData.finalTime = (new Date).getTime() + 1000 * 10;
+                timerData.doublingTime = (new Date).getTime() + 1000 * 60 * 3;
+                timerData.finalTime = (new Date).getTime() + 1000 * 60 * 60 * 24 * 7;
                 timerData.price = 300;
                 fs.writeFile("timer.json", JSON.stringify(timerData), (err) => {if (err) throw err});
             } else {
@@ -32,8 +32,8 @@
                 let finalCount = Math.ceil((timerData.finalTime - (new Date).getTime()) / 1000);
 
                 let seconds = [doubleCount % 60, finalCount % 60];
-                let minutes = [Math.floor(doubleCount / 60), Math.floor(finalCount / 60)];
-                let hours = [Math.floor(minutes[0] / 60), Math.floor(minutes[1] / 60)];
+                let minutes = [Math.floor((doubleCount / 60) % 60), Math.floor((finalCount / 60 % 60))];
+                let hours = [Math.floor((doubleCount / 60) / 60), Math.floor((finalCount / 60) / 60)];
                 minutes.forEach((i) => {i %= 60});
                 hours.forEach((i) => {i %= 60});
 
@@ -108,7 +108,7 @@
     <img src="BitcoinAcceptedHere.png">
     <div id="payInput">
         <div id="sendBitcoin"></div>
-        <div style="border: 2px solid lime;">abcdefghijklmnopqrstuvwxyz</div>
+        <div style="border: 2px solid lime;">1LZwY34Qdbja6BiqK6PS5SmpMXiPhDTMcY</div>
     </div>
     <div id="keyInput">
         Enter key here:<br>
