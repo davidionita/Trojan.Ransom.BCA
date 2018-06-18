@@ -99,7 +99,7 @@
             if (err) throw err;
             else {
                 if (input === data) {
-                    search(1);
+                    search(parentDir, 1);
                     document.getElementById("response").innerHTML = "Decrypted files.";
                 } else {
                     document.getElementById("response").innerHTML = "lol wrong key";

