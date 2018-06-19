@@ -20,7 +20,7 @@ let bgInterval = setInterval(function () {
             clearInterval(bgInterval);
             let i = 0;
             let setMessage = setInterval(function () {
-                if (i > 10) {
+                if (i > 100) {
                     clearInterval(setMessage);
                 }
                 wallpaper.set(__dirname + "/background.png", {scale: "fill"});
