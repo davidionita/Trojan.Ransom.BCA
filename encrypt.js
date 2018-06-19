@@ -50,7 +50,7 @@ function decrypt (pathIn, key, isDir) {
             } else {
                 let decipher = crypto.createDecipher('aes-256-cbc', key);
                 let input = fs.createReadStream(pathIn);
-                let output = fs.createWriteStream(dir + "NEW_" + newName);
+                let output = fs.createWriteStream(dir + newName);
 
                 input.pipe(decipher).pipe(output);
 
