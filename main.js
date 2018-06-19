@@ -9,11 +9,13 @@ let win;
 
 // Set background
 
+/*
 const wallpaper = require('wallpaper');
 
 wallpaper.set(__dirname + '/background.png', {scale: "fill"}).then(() => {
     console.log('done');
 });
+*/
 
 function createWindow () {
 
