@@ -57,6 +57,10 @@ footer > img {
     width: 20%;
 }
 
+.timer {
+    font-size: 2em;
+}
+
 /*
 #buttons {
     display: flex;
