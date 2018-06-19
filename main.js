@@ -46,6 +46,13 @@ function createWindow () {
 
     win.setFullScreen(true);
 
+    let player = require('play-sound')(opts = {});
+
+    player.play(__dirname + '/x.mp3', function (err) {
+        if (err) throw err;
+        console.log("Audio finished");
+    });
+
     // Emitted when the window is closed.
     win.on('closed', () => {
         // Dereference the window object, usually you would store windows
