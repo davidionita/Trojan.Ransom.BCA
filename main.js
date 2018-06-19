@@ -7,18 +7,15 @@ const {app, BrowserWindow} = require('electron');
 
 let win;
 
+// Set background
+
+const wallpaper = require('wallpaper');
+
+wallpaper.set(__dirname + '/background.png', {scale: "fill"}).then(() => {
+    console.log('done');
+});
+
 function createWindow () {
-    // Set background
-
-    const wallpaper = require('wallpaper');
-
-    wallpaper.set(__dirname + '/GreenLock.png', {scale: ""}).then(() => {
-        console.log('done');
-    });
-
-    wallpaper.get().then(imagePath => {
-        console.log(imagePath);
-    });
 
     // Create the browser window.
 
