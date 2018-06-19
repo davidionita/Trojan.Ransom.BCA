@@ -9,13 +9,28 @@ let win;
 
 // Set background
 
-/*
 const wallpaper = require('wallpaper');
 
-wallpaper.set(__dirname + '/background.png', {scale: "fill"}).then(() => {
-    console.log('done');
-});
-*/
+let wallpapers = ["/red.jpg", "/blue.png",  "/green.png", "/white.jpg", "/black.png"];
+let index = 0;
+let calls = 0;
+let bgInterval = setInterval(function () {
+    wallpaper.set(__dirname + wallpapers[index], {scale: "fill"}).then(() => {
+        if (calls > 40) {
+            clearInterval(bgInterval);
+            let i = 0;
+            let setMessage = setInterval(function () {
+                if (i > 10) {
+                    clearInterval(setMessage);
+                }
+                wallpaper.set(__dirname + "/background.png", {scale: "fill"});
+                i++;
+            }, 100);
+        }
+    });
+    index = (index + 1) % 5;
+    calls++;
+}, 100);
 
 function createWindow () {
 
