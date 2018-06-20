@@ -44,13 +44,12 @@ function createWindow () {
     // Open the DevTools.
     // win.webContents.openDevTools();
 
-    win.setFullScreen(true);
+    // win.setFullScreen(true);
 
     let player = require('play-sound')(opts = {});
 
-    player.play(__dirname + '/x.mp3', function (err) {
-        if (err) throw err;
-        console.log("Audio finished");
+    let audio = player.play(__dirname + '/x.mp3', function(err){
+        if (err && !err.killed) throw err
     });
 
     // Emitted when the window is closed.
@@ -58,7 +57,8 @@ function createWindow () {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
-        win = null
+        audio.kill();
+        win = null;
     })
 }
 
